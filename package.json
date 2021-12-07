@@ -1,0 +1,32 @@
+{
+  "name": "json-node-db",
+  "version": "0.5.0",
+  "main": "./dist/main.js",
+  "author": "Sifatul <mdsifatulislam.rabbi@gmail.com> (https://temujins.github.io)",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=12.*"
+  },
+  "scripts": {
+    "start:dev": "nodemon ./src/main.ts",
+    "start": "./dist/main.js",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.11",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}
