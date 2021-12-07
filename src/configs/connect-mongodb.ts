@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { config } from "../config";
+import { config } from "./configs";
 
 export class ConnectDb {
   static async connect(): Promise<void> {

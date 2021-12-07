@@ -1,12 +1,12 @@
 import express from "express";
-import { MainController, UsersController } from "./apps";
-import { ConnectDb } from "./config";
+import { MainController, UsersController, AuthController } from "./apps";
+import { ConnectDb, PassportConfig, SessionConfig } from "./configs";
 
 export class App {
   private APP!: express.Express;
   private PORT!: number;
 
-  public constructor() {
+  constructor() {
     this.PORT = 5000;
     this.APP = express();
 
@@ -18,11 +18,15 @@ export class App {
   private useMiddlewares(): void {
     this.APP.use(express.json());
     this.APP.use(express.urlencoded({ extended: true }));
+
+    SessionConfig.use(this.APP);
+    PassportConfig.use(this.APP);
   }
 
   private useRouters(): void {
     this.APP.use(MainController.use());
     this.APP.use(UsersController.use());
+    this.APP.use(AuthController.use());
   }
 
   start(): void {
