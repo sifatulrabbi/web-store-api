@@ -1,5 +1,7 @@
 import express from "express";
-import { MainController, UsersController, AuthController } from "./apps";
+import { HomeController } from "./home";
+import { AuthController } from "./auth";
+import { UsersController } from "./users";
 import { ConnectDb, PassportConfig, SessionConfig } from "./configs";
 
 export class App {
@@ -24,7 +26,7 @@ export class App {
   }
 
   private useRouters(): void {
-    MainController.use(this.APP);
+    HomeController.use(this.APP);
     UsersController.use(this.APP);
     AuthController.use(this.APP);
   }

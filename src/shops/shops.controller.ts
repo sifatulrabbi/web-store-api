@@ -1,5 +1,5 @@
 import { Express, Router, Request, Response } from "express";
-import { CustomResponse } from "../../libs";
+import { CustomResponse } from "../common";
 
 export class ShopsController {
   static use(app: Express): void {

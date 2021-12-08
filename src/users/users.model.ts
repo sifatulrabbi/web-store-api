@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IUser, IUsersModel } from "../../typings";
+import { IUser, IUsersModel } from "../typings";
 
 class UsersModel {
   private readonly schema: mongoose.Schema<IUser>;

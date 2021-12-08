@@ -1,9 +1,9 @@
 import { Express, Router, Request, Response } from "express";
-import { CustomResponse } from "../../common";
+import { CustomResponse } from "../common";
 
-export class MainController {
+export class HomeController {
   static use(app: Express): void {
-    const router: Router = new MainController().getRouter();
+    const router: Router = new HomeController().getRouter();
     app.use("/", router);
   }
 

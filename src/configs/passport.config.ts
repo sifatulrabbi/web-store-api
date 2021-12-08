@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Express } from "express";
-import { LocalStrategy } from "../apps/auth";
-import { authService } from "../apps";
+import { LocalStrategy } from "../auth";
+import { authService } from "../auth";
 
 export class PassportConfig {
   static use(app: Express): void {

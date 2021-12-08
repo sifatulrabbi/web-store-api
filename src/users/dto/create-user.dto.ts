@@ -1,4 +1,4 @@
-import { IUser } from "../../../typings";
+import { IUser } from "../../typings";
 
 export function createUserDto(body: any): IUser {
   if (!body.name) {

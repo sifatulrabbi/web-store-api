@@ -1,8 +1,8 @@
 import { Express, NextFunction, Request, Response, Router } from "express";
-import { IUserPreview } from "../../typings";
+import { IUserPreview } from "../typings";
 import passport from "passport";
 import { loginDto } from "./dto";
-import { CustomResponse } from "../../common";
+import { CustomResponse } from "../common";
 
 export class AuthController {
   static use(app: Express): void {

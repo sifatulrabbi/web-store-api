@@ -1,6 +1,6 @@
-import { IUser, IUserDocument, IUserPreview, IUsersModel } from "../../typings";
+import { IUser, IUserDocument, IUserPreview, IUsersModel } from "../typings";
 import { usersModel } from "./users.model";
-import { Passwords } from "../../common";
+import { Passwords } from "../common";
 
 class UsersService {
   constructor(private readonly usersModel: IUsersModel) {}

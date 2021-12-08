@@ -1,6 +1,6 @@
-import { IUserDocument, IUserPreview } from "../../typings";
+import { IUserDocument, IUserPreview } from "../typings";
 import { usersService } from "../users";
-import { Passwords } from "../../common";
+import { Passwords } from "../common";
 
 type IDone = (
   err: unknown | null,

@@ -1,8 +1,8 @@
 import { Express, Router, Request, Response } from "express";
-import { IUser, IUserDocument } from "../../typings";
+import { IUser, IUserDocument } from "../typings";
 import { createUserDto, updateUserDto } from "./dto";
 import { usersService } from "./users.service";
-import { CustomResponse, authGuard, adminGuard } from "../../common";
+import { CustomResponse, authGuard, adminGuard } from "../common";
 
 export class UsersController {
   static use(app: Express): void {
