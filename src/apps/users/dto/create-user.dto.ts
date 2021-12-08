@@ -1,16 +1,8 @@
 import { IUser } from "../../../typings";
 
-// export interface ICreateUserDto extends IUser {
-//   confirm_pass: string;
-// }
-
 export function createUserDto(body: any): IUser {
-  if (!body.username) {
-    throw "Username is required";
-  }
-
-  if (!body.full_name) {
-    throw "Full name is required";
+  if (!body.name) {
+    throw "Name is required";
   }
 
   if (!body.email) {
@@ -31,8 +23,7 @@ export function createUserDto(body: any): IUser {
 
   return {
     email: body.email,
-    username: body.username,
-    full_name: body.full_name,
+    name: body.name,
     password: body.password,
   };
 }

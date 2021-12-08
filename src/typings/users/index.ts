@@ -2,12 +2,11 @@ import { Document, Model } from "mongoose";
 
 export interface IUser {
   _id?: string;
-  username: string;
-  full_name: string;
   email: string;
+  name: string;
+  password: string;
   shop_name?: string;
   shop_id?: string;
-  password: string;
 }
 
 export type IUserPreview = Omit<IUser, "password">;

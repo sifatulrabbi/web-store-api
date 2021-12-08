@@ -14,12 +14,7 @@ class UsersModel {
           required: true,
           unique: true,
         },
-        username: {
-          type: String,
-          required: true,
-          unique: true,
-        },
-        full_name: {
+        name: {
           type: String,
           required: true,
         },
@@ -29,7 +24,6 @@ class UsersModel {
         },
         shop_id: {
           type: String,
-          unique: true,
         },
         shop_name: {
           type: String,
