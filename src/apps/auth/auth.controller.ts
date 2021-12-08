@@ -1,12 +1,13 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Express, NextFunction, Request, Response, Router } from "express";
 import { IUserPreview } from "../../typings";
 import passport from "passport";
 import { loginDto } from "./dto";
-import { CustomResponse } from "../../libs";
+import { CustomResponse } from "../../common";
 
 export class AuthController {
-  static use(): Router {
-    return new AuthController().router;
+  static use(app: Express): void {
+    const router: Router = new AuthController().getRouter();
+    app.use("/auth", router);
   }
 
   private readonly router: Router;
@@ -15,7 +16,7 @@ export class AuthController {
     this.router = Router();
 
     this.router.post(
-      "/auth/login",
+      "/login",
       this.checkInputs,
       async (req: Request, res: Response): Promise<void> => {
         passport.authenticate(
@@ -31,7 +32,7 @@ export class AuthController {
               return;
             }
 
-            req.logIn(user, (err: unknown) => {
+            req.logIn(user, (err: unknown): void => {
               if (err) {
                 CustomResponse.Unauthorized(res, String(err));
                 return;
@@ -42,6 +43,11 @@ export class AuthController {
         )(req, res);
       },
     );
+
+    this.router.post("/logout", (req: Request, res: Response): void => {
+      req.logout();
+      CustomResponse.Ok(res, "Logout successful");
+    });
   }
 
   private checkInputs(req: Request, res: Response, next: NextFunction): void {
@@ -51,5 +57,9 @@ export class AuthController {
     } catch (err) {
       CustomResponse.NotFound(res, String(err));
     }
+  }
+
+  getRouter(): Router {
+    return this.router;
   }
 }

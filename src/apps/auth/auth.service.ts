@@ -1,6 +1,6 @@
 import { IUserDocument, IUserPreview } from "../../typings";
 import { usersService } from "../users";
-import { Passwords } from "../../libs";
+import { Passwords } from "../../common";
 
 type IDone = (
   err: unknown | null,
@@ -10,19 +10,21 @@ type IDone = (
 
 export class AuthService {
   public async validateUser(email: string, password: string, done: IDone): Promise<void> {
-    const user: IUserDocument | null = await usersService.findOne({ email });
+    try {
+      const user: IUserDocument | null = await usersService.findOne({ email });
 
-    if (!user) {
-      done(null, false, { message: "User not found" });
-      return;
-    }
+      if (!user) {
+        throw "User not found please sign up";
+      }
 
-    if (await Passwords.comparePass(password, user.password)) {
+      if (!(await Passwords.comparePass(password, user.password))) {
+        throw "Email and Password don't match";
+      }
+
       done(null, usersService.trimUser(user));
-      return;
+    } catch (err: unknown) {
+      done(null, false, { message: String(err) });
     }
-
-    done(null, false, { message: "Incorrect credentials" });
   }
 
   public serializer(user: IUserPreview, done: (err: unknown, userId?: string) => void): void {
