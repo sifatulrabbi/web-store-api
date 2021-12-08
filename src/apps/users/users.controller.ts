@@ -1,12 +1,13 @@
-import { Router, Request, Response } from "express";
-import { IUser, IUserDocument, IUserPreview } from "../../typings";
+import { Express, Router, Request, Response } from "express";
+import { IUser, IUserDocument } from "../../typings";
 import { createUserDto, updateUserDto } from "./dto";
 import { usersService } from "./users.service";
-import { CustomResponse } from "../../libs";
+import { CustomResponse, authGuard, adminGuard } from "../../common";
 
 export class UsersController {
-  static use(): Router {
-    return new UsersController().Router;
+  static use(app: Express): void {
+    const router: Router = new UsersController().getRouter();
+    app.use("/users", router);
   }
 
   private readonly router: Router;
@@ -14,7 +15,7 @@ export class UsersController {
   private constructor() {
     this.router = Router();
 
-    this.router.get("/users", async (req: Request, res: Response): Promise<void> => {
+    this.router.get("/", adminGuard, async (req: Request, res: Response): Promise<void> => {
       try {
         const users: IUserDocument[] = await usersService.findAll();
 
@@ -24,11 +25,13 @@ export class UsersController {
       }
     });
 
-    this.router.get("/users/:userId", async (req: Request, res: Response): Promise<void> => {
+    this.router.get("/me", authGuard, async (req: Request, res: Response): Promise<void> => {
       try {
-        const userId: string = req.params["userId"];
+        if (!req.user?._id) throw "User session expired please login again";
+
+        const userId: string = req.user?._id;
         const user: IUserDocument = await usersService.findOne({ _id: userId });
-        if (!user) throw "User not found";
+        if (!user) throw "User not found please sign up";
 
         CustomResponse.Ok(res, "User found", usersService.trimUser(user));
       } catch (err) {
@@ -36,7 +39,7 @@ export class UsersController {
       }
     });
 
-    this.router.post("/users", async (req: Request, res: Response): Promise<void> => {
+    this.router.post("/", async (req: Request, res: Response): Promise<void> => {
       try {
         const userData: IUser = createUserDto(req.body);
         const createdUser: IUserDocument = await usersService.create(userData);
@@ -47,9 +50,11 @@ export class UsersController {
       }
     });
 
-    this.router.put("/users/:userId", async (req: Request, res: Response): Promise<void> => {
+    this.router.put("/me", authGuard, async (req: Request, res: Response): Promise<void> => {
       try {
-        const userId: string = req.params["userId"];
+        if (!req.user?._id) throw "User session expired please login again";
+
+        const userId: string = req.user?._id;
         const userData: IUser = updateUserDto(req.body);
         const updatedUser: IUserDocument = await usersService.update(userId, userData);
 
@@ -59,9 +64,11 @@ export class UsersController {
       }
     });
 
-    this.router.delete("/users/:userId", async (req: Request, res: Response): Promise<void> => {
+    this.router.delete("/me", authGuard, async (req: Request, res: Response): Promise<void> => {
       try {
-        const userId: string = req.params["userId"];
+        if (!req.user?._id) throw "User session expired please login again";
+
+        const userId: string = req.user._id;
         await usersService.remove(userId);
 
         CustomResponse.Ok(res, "User removed", []);
@@ -69,9 +76,19 @@ export class UsersController {
         CustomResponse.BadRequest(res, String(err));
       }
     });
+
+    this.router.delete("/", adminGuard, (req: Request, res: Response): void => {
+      try {
+        usersService.bulkRemove(req.body);
+
+        CustomResponse.Ok(res);
+      } catch (err) {
+        CustomResponse.BadRequest(res, String(err));
+      }
+    });
   }
 
-  get Router(): Router {
+  getRouter(): Router {
     return this.router;
   }
 }
