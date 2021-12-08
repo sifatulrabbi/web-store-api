@@ -1,9 +1,10 @@
-import { Router, Request, Response } from "express";
-import { CustomResponse } from "../../libs";
+import { Express, Router, Request, Response } from "express";
+import { CustomResponse } from "../../common";
 
 export class MainController {
-  static use(): Router {
-    return new MainController().Router;
+  static use(app: Express): void {
+    const router: Router = new MainController().getRouter();
+    app.use("/", router);
   }
 
   private readonly router: Router;
@@ -16,7 +17,7 @@ export class MainController {
     });
   }
 
-  get Router(): Router {
+  getRouter(): Router {
     return this.router;
   }
 }

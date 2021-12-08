@@ -24,9 +24,9 @@ export class App {
   }
 
   private useRouters(): void {
-    this.APP.use(MainController.use());
-    this.APP.use(UsersController.use());
-    this.APP.use(AuthController.use());
+    MainController.use(this.APP);
+    UsersController.use(this.APP);
+    AuthController.use(this.APP);
   }
 
   start(): void {

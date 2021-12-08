@@ -1,6 +1,6 @@
 import session from "express-session";
 import { Express } from "express";
-import { config } from "./configs";
+import { config } from "./config";
 import MongoStore from "connect-mongo";
 
 export class SessionConfig {
