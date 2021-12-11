@@ -2,6 +2,7 @@ import express from "express";
 import { HomeController } from "./home";
 import { AuthController } from "./auth";
 import { UsersController } from "./users";
+import { ShopsController } from "./shops";
 import { ConnectDb, PassportConfig, SessionConfig } from "./configs";
 
 export class App {
@@ -29,6 +30,7 @@ export class App {
     HomeController.use(this.APP);
     UsersController.use(this.APP);
     AuthController.use(this.APP);
+    ShopsController.use(this.APP);
   }
 
   start(): void {

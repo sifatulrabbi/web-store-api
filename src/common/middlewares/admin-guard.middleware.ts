@@ -1,6 +1,6 @@
 import { config } from "../../configs";
 import { Request, Response, NextFunction } from "express";
-import { CustomResponse } from "../libs";
+import { CustomResponse } from "../helpers";
 
 export function adminGuard(req: Request, res: Response, next: NextFunction): void {
   try {

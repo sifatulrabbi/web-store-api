@@ -12,4 +12,4 @@ export interface IShop {
 
 export type IShopDocument = IShop & Document;
 
-export type IShopsModel = Model<IShopDocument>;
+export type IShopsModel = Model<IShop>;

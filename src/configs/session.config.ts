@@ -20,6 +20,5 @@ export class SessionConfig {
         }),
       }),
     );
-    console.log("Session created");
   }
 }

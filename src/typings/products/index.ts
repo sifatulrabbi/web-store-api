@@ -17,4 +17,4 @@ export interface IProd {
 
 export type IProdDocument = IProd & Document;
 
-export type IProdModel = Model<IProdDocument>;
+export type IProdModel = Model<IProd>;

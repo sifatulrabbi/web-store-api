@@ -1,15 +1,17 @@
 import * as dotenv from "dotenv";
 
 export class Config {
-  private PORT!: number;
-  private MONGODB_URI!: string;
-  private SESSION_SECRET!: string;
-  private SENDER_EMAIL!: string;
-  private SENDER_EMAIL_PASS!: string;
+  private readonly PORT!: number;
+  private readonly MONGODB_URI!: string;
+  private readonly SESSION_SECRET!: string;
+  private readonly SENDER_EMAIL!: string;
+  private readonly SENDER_EMAIL_PASS!: string;
+  private readonly NODE_ENV!: string;
 
   constructor() {
     dotenv.config();
 
+    this.NODE_ENV = process.env["NODE_ENV"] || "development";
     this.PORT = parseInt(process.env["PORT"] || "5001", 10);
     this.MONGODB_URI = process.env["MONGODB_URI"] || "mongodb://127.0.0.1:27017/store-api";
     this.SESSION_SECRET = process.env["SESSION_SECRET"] || "keyboard cat";
@@ -35,6 +37,10 @@ export class Config {
 
   get senderEmailPass(): string {
     return this.SENDER_EMAIL_PASS;
+  }
+
+  isProduction(): boolean {
+    return this.NODE_ENV === "production";
   }
 }
 

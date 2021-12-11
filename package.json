@@ -9,7 +9,7 @@
     "node": ">=12.*"
   },
   "scripts": {
-    "start:dev": "nodemon ./src/main.ts",
+    "start:dev": "NODE_ENV=development nodemon ./src/main.ts",
     "start": "./dist/main.js",
     "build": "rm -rf ./dist && tsc"
   },
